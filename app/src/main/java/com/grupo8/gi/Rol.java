@@ -1,5 +1,7 @@
 package com.grupo8.gi;
 
+import android.os.Parcel;
+
 import java.util.*;
 
 
@@ -13,7 +15,7 @@ public class Rol
     private boolean admin;
     private List<Permiso> permisos;
 
-	public static List<Rol> ListaRoles()
+    public static List<Rol> ListaRoles()
 	{
         BD miBD = new BD(BD_SERVER, BD_NAME);
         ArrayList<Rol> lista = new ArrayList<Rol>();

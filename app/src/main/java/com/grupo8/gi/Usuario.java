@@ -1,12 +1,13 @@
 package com.grupo8.gi;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Usuario 
+public class Usuario
 {
     private static String BD_SERVER = "192.168.1.16";
     private static String BD_NAME = "GI";
-    
+
     private String nombre;
     private String password;
     private Rol rol;
@@ -123,9 +124,8 @@ public class Usuario
         return rol.Modificacion(p);
     }
 	
-	public String toString()
-	{
-	
-		return nombre + "     " + password + "     " + rol.getRolName();
-	}
+	public String toString() {
+        return nombre + "     " + password + "     " + rol.getRolName();
+    }
+
 }

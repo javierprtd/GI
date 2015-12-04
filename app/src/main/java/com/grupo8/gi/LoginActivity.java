@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private Usuario user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -337,9 +340,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
             try {
 
-                Usuario user = new Usuario(mEmail, mPassword);
+                user = new Usuario(mEmail, mPassword);
                 if (user.getRol().Acceso("USUARIOS"))
                     acceso = true;
+
                 if (user.getRol().Modificacion("USUARIOS"))
                     modificacion = true;
 
@@ -359,6 +363,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 finish();
                 Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                List<Usuario> listUsers = new ArrayList<Usuario>();
+                listUsers.add(user);
+                myIntent.putExtra("userName", mEmail);
+                myIntent.putExtra("userPwd", mPassword);
                 myIntent.putExtra("acceso", acceso);
                 myIntent.putExtra("modificacion", modificacion);
                 startActivity(myIntent);

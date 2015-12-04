@@ -7,6 +7,8 @@ import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.sourceforge.jtds.jdbc.Driver;
+
 import java.sql.*;
 import java.util.*;
 
@@ -16,9 +18,12 @@ public class BD
 
 	public BD (String server, String databaseName) {
 		try {
+			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+			StrictMode.setThreadPolicy(policy);
+
 			Class.forName("net.sourceforge.jtds.jdbc.Driver");
 			String connUrl = "jdbc:jtds:sqlserver://" + server + "/" + databaseName;
-			con = DriverManager.getConnection(connUrl);
+			con = DriverManager.getConnection(connUrl, "invitado", "invitado");
 		} catch (SQLException e) {
 			Log.e("Error1", e.getMessage());
 		} catch (ClassNotFoundException e) {
