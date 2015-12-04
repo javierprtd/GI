@@ -341,10 +341,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             try {
 
                 user = new Usuario(mEmail, mPassword);
-                if (user.getRol().Acceso("USUARIOS"))
+                if (user.getRol().Acceso("CONTACTO"))
                     acceso = true;
 
-                if (user.getRol().Modificacion("USUARIOS"))
+                if (user.getRol().Modificacion("CONTACTO"))
                     modificacion = true;
 
                 return true;
@@ -365,8 +365,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
                 List<Usuario> listUsers = new ArrayList<Usuario>();
                 listUsers.add(user);
-                myIntent.putExtra("userName", mEmail);
-                myIntent.putExtra("userPwd", mPassword);
                 myIntent.putExtra("acceso", acceso);
                 myIntent.putExtra("modificacion", modificacion);
                 startActivity(myIntent);
