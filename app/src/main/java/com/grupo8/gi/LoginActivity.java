@@ -229,8 +229,6 @@ public class LoginActivity extends AppCompatActivity {
                 Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
                 myIntent.putExtra(NAME_INTENT_ACCESS, acceso);
                 myIntent.putExtra(NAME_INTENT_MODIFY, modificacion);
-               /* myIntent.putExtra(NAME_INTENT_MEDICAMENTOS, (ArrayList<Medicamento>) medicamentosList);
-                myIntent.putExtra(NAME_INTENT_LABORATORIOS, (ArrayList<Laboratorio>) laboratorioList);*/
                 startActivity(myIntent);
             } else {
                 mPasswordView.setError("Usuario o contraseña incorrecta");

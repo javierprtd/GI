@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Jorge on 07/12/2015.
  */
-public class Medicamento implements Serializable{
+public class Medicamento implements Serializable {
     private static final String NAME_TABLE = "tMedicamento";
     private static final String PK_TABLE = "ID_MEDICAMENTO";
 
@@ -31,7 +31,7 @@ public class Medicamento implements Serializable{
     }
 
     public Medicamento(int idMedicamento){
-       // BD miBD = new BD();
+        BD miBD = new BD();
         String sel = "SELECT * FROM "+NAME_TABLE+" WHERE "+PK_TABLE+"="+idMedicamento+";";
         Object[] tupla = miBD.Select(sel).get(0);
 
@@ -40,7 +40,7 @@ public class Medicamento implements Serializable{
         cantidadDisponible = (int)tupla[2];
         laboratorio = (int)tupla[3];
 
-      //  miBD.finalize();
+        miBD.finalize();
     }
 
     public Medicamento(int idMedicamento, String nombreMedicamento, int cantidadDisponible, int laboratorio) {

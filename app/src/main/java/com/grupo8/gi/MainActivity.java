@@ -62,19 +62,15 @@ public class MainActivity extends AppCompatActivity {
 		modificacion = myIntent.getBooleanExtra(LoginActivity.NAME_INTENT_MODIFY, false);
         medicamentosList = DatosPrincipales.getInstance().getMedicamentosList();
         laboratoriosList = DatosPrincipales.getInstance().getLaboratorioList();
-       /* medicamentosList = (ArrayList<Medicamento>) myIntent.getSerializableExtra(LoginActivity.NAME_INTENT_MEDICAMENTOS);
-        laboratoriosList = (ArrayList<Laboratorio>)myIntent.getSerializableExtra(LoginActivity.NAME_INTENT_LABORATORIOS);*/
 	}
 
 
     private void initMedicamentosListView() {
-       // medicamentosList = Medicamento.ListaMedicamentos();
         ArrayAdapter<Medicamento> arrayAdapter = new MedicamentosAdapter(getApplicationContext(),medicamentosList);
         listViewMedicamentos.setAdapter(arrayAdapter);
     }
 
     private void initLaboratoriosSpinner(){
-       // List<Laboratorio> laboratoriosList = Laboratorio.ListaLaboratorios();
         List<String> identificadores = new ArrayList<>();
 
         for(Laboratorio laboratorio : laboratoriosList){
@@ -119,10 +115,7 @@ public class MainActivity extends AppCompatActivity {
 			} else {
                 habilitarBotones(false);
 			}
-        } else {
-
-
-		}
+        }
 	}
 
 	@Override
@@ -145,13 +138,17 @@ public class MainActivity extends AppCompatActivity {
 
         Medicamento medicamento = new Medicamento(idMedicamento,nombreMedicamento,cantidadDisponible,laboratorio);
 
+        listViewMedicamentos.clearChoices();
         ArrayAdapter<Medicamento> arrayAdapter = (ArrayAdapter<Medicamento>) listViewMedicamentos.getAdapter();
-        arrayAdapter.insert(medicamento,0);
+        arrayAdapter.insert(medicamento, 0);
         arrayAdapter.notifyDataSetInvalidated();
+
+        onClickClean(v);
+
         //TODO GENERAR CATCH PARA ID REPETIDOS O LAB NO EXISTENTES
     }
 
-    public void onClickModify(View v){
+    public void onClickModify(View v) {
         int idMedicamento = Integer.parseInt(String.valueOf(editTextidMedicamento.getText().toString()));
         String nombreMedicamento = editTextnombreMedicamento.getText().toString();
         int cantidadDisponible = Integer.parseInt(editTextCantidadDisponible.getText().toString());
@@ -186,13 +183,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickClean(View v){
+
         editTextCantidadDisponible.setText("");
         editTextidMedicamento.setText("");
         //spinnerLaboratorio.setText(""); //TODO LAB va por spinner
         editTextnombreMedicamento.setText("");
 
         listViewMedicamentos.setSelection(0);
-
-
     }
 }

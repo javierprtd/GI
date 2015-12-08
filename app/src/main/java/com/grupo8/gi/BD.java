@@ -8,7 +8,7 @@ import java.util.*;
 
 public class BD 
 {
-	private static final String SERVER = "192.168.1.131";
+	private static final String SERVER = "192.168.1.16";
     private static final String DATA_BASE_NAME = "GI";
     private static final String USER_BD = "invitado";
     private static final String USER_PASS = "invitado";
