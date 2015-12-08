@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GI</string>
+    <string name="app_name">Medicamentos</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
