@@ -5,8 +5,6 @@ import java.util.*;
 
 public class Usuario
 {
-    private static String BD_SERVER = "192.168.1.16";
-    private static String BD_NAME = "GI";
 
     private String nombre;
     private String password;
@@ -15,7 +13,7 @@ public class Usuario
 	public static List<Usuario> ListaUsuarios()
 	{
 		// Retorna una lista con todos los obejtos de la clase almacenados en la base de datos
-		BD miBD = new BD(BD_SERVER, BD_NAME);
+		BD miBD = new BD();
 		ArrayList<Usuario> lista = new ArrayList<Usuario>(); 
 					
 		for(Object[] tupla: miBD.Select("SELECT nombre,password FROM tUsuario")) {
@@ -32,7 +30,7 @@ public class Usuario
     public Usuario(String n, String p)
     {
 		// Crea el objeto cargando sus valores de la base de datos
-        BD miBD = new BD(BD_SERVER, BD_NAME);
+        BD miBD = new BD();
         Object[] tupla = miBD.Select("SELECT * FROM tUsuario WHERE nombre='"+n+"';").get(0);
     	miBD.finalize();
     	
@@ -50,7 +48,7 @@ public class Usuario
     public Usuario(String n, String p, Rol r)
     {
 		// Crea el objeto y lo inserta en la base de datos
-        BD miBD = new BD(BD_SERVER, BD_NAME);
+        BD miBD = new BD();
 
     	miBD.Insert("INSERT INTO tUsuario VALUES("
 				+ "'" + n + "', '" + p + "', '" + r.getRolName() + "');" );			
@@ -69,7 +67,7 @@ public class Usuario
     { 
     	
 		// Actualiza el atributo en memoria y en la base de datos
-        BD miBD = new BD(BD_SERVER, BD_NAME);
+        BD miBD = new BD();
         miBD.Update("UPDATE tUsuario SET nombre = '" + value
     			+ "' WHERE nombre ='"+ this.nombre + "';");
     	miBD.finalize();
@@ -84,7 +82,7 @@ public class Usuario
     public void setPassword(String value)
     { 
 		// Actualiza el atributo en memoria y en la base de datos
-        BD miBD = new BD(BD_SERVER, BD_NAME);
+        BD miBD = new BD();
         miBD.Update("UPDATE tUsuario SET password = '" + value + "' WHERE nombre = '" + nombre + "'");
     	miBD.finalize();
     	password = value;
@@ -104,7 +102,7 @@ public class Usuario
     {
         if (this.rol.getAdmin()) {
         	// Actualiza el atributo rol de u en memoria y en la base de datos
-            BD miBD = new BD(BD_SERVER, BD_NAME);
+            BD miBD = new BD();
             miBD.Update("UPDATE tUsuario SET rolName = '" + r.getRolName() + "' WHERE nombre = '" + u.getNombre() + "'");
         	miBD.finalize();
         	u.rol = r;

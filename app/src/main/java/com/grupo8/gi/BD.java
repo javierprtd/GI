@@ -15,21 +15,6 @@ public class BD
 
 	private Connection con = null;
 
-	public BD (String server, String databaseName) {
-		try {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-
-            Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            String connUrl = "jdbc:jtds:sqlserver://" + SERVER + "/" + DATA_BASE_NAME;
-            con = DriverManager.getConnection(connUrl, USER_BD, USER_PASS);
-		} catch (SQLException e) {
-			throw new Error(e.getMessage());
-		} catch (ClassNotFoundException e) {
-            throw new Error(e.getMessage());
-		}
-	}
-
 	public BD () {
 		try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

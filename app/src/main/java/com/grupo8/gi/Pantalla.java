@@ -6,16 +6,13 @@ public class Pantalla
 {
 	public enum PANTALLAS {MEDICAMENTOS};
 
-    private static String BD_SERVER = "192.168.1.16";
-    private static String BD_NAME = "GI";
-
 	private String pantalla;
 
 
     public static List<Pantalla> ListaPantalla()
     {
 		// Retorna una lista con todos los obejtos de la clase almacenados en la base de datos
-		BD miBD = new BD(BD_SERVER, BD_NAME);
+		BD miBD = new BD();
 		ArrayList<Pantalla> lista = new ArrayList<Pantalla>();
 					
 		for(Object[] tupla: miBD.Select("SELECT pantalla FROM tPantalla")) {
@@ -32,7 +29,7 @@ public class Pantalla
     {
 	// Crea el objeto cargando sus valores de la base de datos. Si no existe lo inserta
 
-		BD miBD = new BD(BD_SERVER, BD_NAME);
+		BD miBD = new BD();
 
 		int num= (Integer) miBD.SelectEscalar("SELECT COUNT(*) FROM tPantalla WHERE pantalla ='"+ p + "';");
 		if (num==0)
@@ -45,7 +42,7 @@ public class Pantalla
 	public void setPantalla(String value) 
 	{
 		// Actualiza el atributo en memoria y en la base de datos
-		BD miBD = new BD(BD_SERVER, BD_NAME);
+		BD miBD = new BD();
 		miBD.Update("UPDATE tPantalla SET pantalla = '" + value + "' WHERE pantalla = '" + pantalla + "'");
 		miBD.finalize();
 		pantalla = value;

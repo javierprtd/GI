@@ -16,17 +16,15 @@ public class Medicamento implements Serializable {
     private int cantidadDisponible;
     private int laboratorio;
 
-    private static BD miBD = new BD();
-
     public static List<Medicamento> ListaMedicamentos() {
         List<Medicamento> lista = new ArrayList<>();
 
-       // BD miBD = new BD();
+        BD miBD = new BD();
         String sel = "SELECT "+PK_TABLE+" FROM "+NAME_TABLE+";";
         for(Object[] tupla: miBD.Select(sel)) {
             lista.add(new Medicamento((int) tupla[0]));
         }
-       // miBD.finalize();
+        miBD.finalize();
         return lista;
     }
 

@@ -9,9 +9,6 @@ public class Rol
 {
 
     public enum ROLES {ADMINISTRADOR,USUARIO,INVITADO};
-
-    private static String BD_SERVER = "192.168.1.16";
-    private static String BD_NAME = "GI";
     
     private String rolName;
     private String rolDes;
@@ -21,7 +18,7 @@ public class Rol
 
     public static List<Rol> ListaRoles()
 	{
-        BD miBD = new BD(BD_SERVER, BD_NAME);
+        BD miBD = new BD();
         ArrayList<Rol> lista = new ArrayList<Rol>();
 		// Retorna una lista con todos los obejtos de la clase almacenados en la base de datos
 		for(Object[] tupla : miBD.Select("SELECT rolName FROM tROL")) {
@@ -38,7 +35,7 @@ public class Rol
     {
 		// Crea el objeto cargando sus valores de la base de datos
     	rolName = name;
-        BD miBD = new BD(BD_SERVER, BD_NAME);
+        BD miBD = new BD();
         Object[] tupla = miBD.Select("SELECT rolDes, admin FROM tRol WHERE rolName = '" + rolName + "'").get(0);
     	rolDes = (String) tupla[0];
     	admin = (boolean) tupla[1];
@@ -57,7 +54,7 @@ public class Rol
     	if(adm)
     		a = 1;
 
-        BD miBD = new BD(BD_SERVER, BD_NAME);
+        BD miBD = new BD();
         miBD.Insert("INSERT tROL (rolName, rolDes, admin) VALUES ('" + rolName + "','" + rolDes + "'," + a + ")");
     	miBD.finalize();
     	permisos = null;
@@ -71,7 +68,7 @@ public class Rol
     public void setRolName(String value) 
     { 
 		// Actualiza el atributo en memoria y en la base de datos
-        BD miBD = new BD(BD_SERVER, BD_NAME);
+        BD miBD = new BD();
         miBD.Update("UPDATE tROL SET rolName = '" + value + "' WHERE rolName = '" + rolName + "'");
         miBD.finalize();
         rolName = value;
@@ -85,7 +82,7 @@ public class Rol
     public void setRolDes(String value) 
     {
 		// Actualiza el atributo en memoria y en la base de datos
-        BD miBD = new BD(BD_SERVER, BD_NAME);
+        BD miBD = new BD();
         miBD.Update("UPDATE tROL SET rolDes = '" + value + "' WHERE rolName = '" + rolName + "'");
     	miBD.finalize();
     	rolDes = value;
@@ -115,7 +112,7 @@ public class Rol
             }
 
 
-        BD miBD = new BD(BD_SERVER, BD_NAME);
+        BD miBD = new BD();
         miBD.Update("UPDATE tROL SET admin = '" + value + "' WHERE rolName = '" + other.getRolName() + "'");
     	miBD.finalize();
     	

@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     List<Laboratorio> laboratoriosList;
 	private Medicamento medicamentoMostrado;
     private int positionItemMostrado;
+    private String userName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 		Intent myIntent = getIntent();
 		acceso = myIntent.getBooleanExtra(LoginActivity.NAME_INTENT_ACCESS, false);
 		modificacion = myIntent.getBooleanExtra(LoginActivity.NAME_INTENT_MODIFY, false);
+        userName = myIntent.getStringExtra(LoginActivity.NAME_INTENT_USER);
         medicamentosList = DatosPrincipales.getInstance().getMedicamentosList();
         laboratoriosList = DatosPrincipales.getInstance().getLaboratorioList();
 	}
@@ -108,8 +110,11 @@ public class MainActivity extends AppCompatActivity {
 
 		if (acceso) {
             initMedicamentosListView();
-            registerListenerMedicamentosListView();
-            initLaboratoriosSpinner();
+            if(!userName.equals("invitado")) {
+                registerListenerMedicamentosListView();
+                initLaboratoriosSpinner();
+            }
+
 			if (modificacion) {
                 habilitarBotones(true);
 			} else {

@@ -32,6 +32,9 @@ public class LoginActivity extends AppCompatActivity {
     public static final String NAME_INTENT_ACCESS = "acceso";
     public static final String NAME_INTENT_MEDICAMENTOS = "medicamentos";
     public static final String NAME_INTENT_LABORATORIOS = "laboratorios";
+    public static final String NAME_INTENT_USER = "user";
+    public static final String NAME_INTENT_PWD = "pwd";
+
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -227,6 +230,7 @@ public class LoginActivity extends AppCompatActivity {
             if (success) {
                 finish();
                 Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                myIntent.putExtra(NAME_INTENT_USER, mName);
                 myIntent.putExtra(NAME_INTENT_ACCESS, acceso);
                 myIntent.putExtra(NAME_INTENT_MODIFY, modificacion);
                 startActivity(myIntent);

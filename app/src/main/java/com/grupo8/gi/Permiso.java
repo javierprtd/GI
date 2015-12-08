@@ -5,8 +5,6 @@ import java.util.*;
 
 public class Permiso 
 {
-    private static String BD_SERVER = "192.168.1.16";
-    private static String BD_NAME = "GI";
     
 	private String rolName;
 	private String pantalla;
@@ -16,7 +14,7 @@ public class Permiso
 
     public static List<Permiso> ListaPermisosRol(String rolName)
     {
-		BD miBD = new BD(BD_SERVER, BD_NAME);
+		BD miBD = new BD();
 		List<Permiso> lista = new ArrayList<Permiso>();
     	// Retorna una lista con todos los obejtos de la clase almacenados en la base de datos
 		for(Object[] tupla : miBD.Select("SELECT rolName, pantalla FROM tPermiso WHERE rolName = '" + rolName + "'")) {
@@ -34,7 +32,7 @@ public class Permiso
     public Permiso(String r, String p)
     {
 		// Crea el objeto cargando sus valores de la base de datos
-		BD miBD = new BD(BD_SERVER, BD_NAME);
+		BD miBD = new BD();
 
 		rolName = r;
 		pantalla = p;
@@ -59,7 +57,7 @@ public class Permiso
     	pantalla = p;
     	acceso = a;
     	modificacion = m;
-		BD miBD = new BD(BD_SERVER, BD_NAME);
+		BD miBD = new BD();
 		miBD.Insert("INSERT tPermiso (rolName,pantalla,acceso,modificacion) VALUES ('" + rolName + "','" + pantalla + "'," + iA + "," + iM + ")");
 		miBD.finalize();
 	
@@ -67,7 +65,7 @@ public class Permiso
     
 	public void setRolName(String value) 
 	{
-		BD miBD = new BD(BD_SERVER, BD_NAME);
+		BD miBD = new BD();
 
 		miBD.Update("UPDATE tPermiso SET rolName = '"+ value 
 				+ "' WHERE rolName='"+ this.rolName + "';");
@@ -88,7 +86,7 @@ public class Permiso
     public void setPantalla(String value) 
     {
 		// Actualiza el atributo en memoria y en la base de datos
-		BD miBD = new BD(BD_SERVER, BD_NAME);
+		BD miBD = new BD();
 		miBD.Update("UPDATE tPermiso SET pantalla = '" + value + "' WHERE rolName = '" + rolName + "'");
 		miBD.finalize();
     	pantalla = value;
@@ -106,7 +104,7 @@ public class Permiso
     	if (value) iA=1;
 		// Actualiza el atributo en memoria y en la base de datos
 
-		BD miBD = new BD(BD_SERVER, BD_NAME);
+		BD miBD = new BD();
 		miBD.Update("UPDATE tPermiso SET acceso = " + iA + " WHERE rolName = '" + rolName + "'");
 		miBD.finalize();
     	acceso = value;
@@ -124,7 +122,7 @@ public class Permiso
     	if (value) iM=1;
     	
 		// Actualiza el atributo en memoria y en la base de datos
-		BD miBD = new BD(BD_SERVER, BD_NAME);
+		BD miBD = new BD();
 		miBD.Update("UPDATE tPermiso SET modificacion = " + iM + " WHERE rolName = '" + rolName + "'");
 		miBD.finalize();
     	modificacion = value;
