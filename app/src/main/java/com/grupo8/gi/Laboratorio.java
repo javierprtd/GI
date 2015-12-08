@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Jorge on 07/12/2015.
- */
 public class Laboratorio implements Serializable{
 
     private static final String NAME_TABLE = "tLaboratorio";

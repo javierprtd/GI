@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /**
- * A login screen that offers login via email/password.
+ * A login screen that offers login via name/password.
  */
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,17 +44,17 @@ public class LoginActivity extends AppCompatActivity {
 
     private Usuario user;
 
-    @InjectView(R.id.email_login_form)
+    @InjectView(R.id.name_login_form)
     protected View mLoginFormView;
 
-    @InjectView(R.id.email)
-    protected AutoCompleteTextView mEmailView;
+    @InjectView(R.id.name)
+    protected AutoCompleteTextView mNameView;
 
     @InjectView(R.id.password)
     protected EditText mPasswordView;
 
-    @InjectView(R.id.email_sign_in_button)
-    protected Button mEmailSignInButton;
+    @InjectView(R.id.name_sign_in_button)
+    protected Button mNameSignInButton;
 
     @InjectView(R.id.login_progress)
     protected View mProgressView;
@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
 
         });
 
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        mNameSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
+     * If there are form errors (invalid name, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
@@ -97,11 +97,11 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+        mNameView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String name = mNameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -114,14 +114,14 @@ public class LoginActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError("El campo nombre es requerido");
-            focusView = mEmailView;
+        // Check for a valid name address.
+        if (TextUtils.isEmpty(name)) {
+            mNameView.setError("El campo nombre es requerido");
+            focusView = mNameView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError("Nombre incorrecto");
-            focusView = mEmailView;
+        } else if (!isNameValid(name)) {
+            mNameView.setError("Nombre incorrecto");
+            focusView = mNameView;
             cancel = true;
         }
 
@@ -133,14 +133,14 @@ public class LoginActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(name, password);
             mAuthTask.execute((Void) null);
         }
     }
 
-    private boolean isEmailValid(String email) {
+    private boolean isNameValid(String name) {
         //TODO: Replace this with your own logic
-        return email.length() < 24;
+        return name.length() < 24;
     }
 
     private boolean isPasswordValid(String password) {
@@ -195,8 +195,8 @@ public class LoginActivity extends AppCompatActivity {
         private boolean acceso = false;
         private boolean modificacion = false;
 
-        UserLoginTask(String email, String password) {
-            mName = email;
+        UserLoginTask(String name, String password) {
+            mName = name;
             mPassword = password;
         }
 
