@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linear_layout_item_medicamento"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:minHeight="?android:attr/listPreferredItemHeight">
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/text_view_id_medicamento"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="normal|bold|italic"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"/>
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/text_view_nombre_medicamento"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="60dp"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="normal|bold|italic"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"/>
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/text_view_cantidad_disponible"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="normal|bold|italic"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"/>
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/text_view_laboratorio"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="normal|bold|italic"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"/>
+
+</LinearLayout>

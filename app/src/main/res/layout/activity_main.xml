@@ -4,105 +4,205 @@
     android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
+    android:clipToPadding="false"
+    android:outlineProvider="bounds"
      >
 
     <LinearLayout
         android:id="@+id/mainActivity_LLAction"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:elevation="16dp"
+        android:background="@drawable/rounded_coners_white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="vertical" >
 
-
-            <EditText
-                android:id="@+id/main_et_nombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-
-            <EditText
-                android:id="@+id/main_et_apellido"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <EditText
-                android:id="@+id/main_et_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <EditText
-                android:id="@+id/main_et_telefono"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textStyle="normal|bold|italic"
+                    android:text="ID"
+                    android:paddingLeft="5dp"
+                    android:gravity="center"
+                    />
+
+
+                <EditText
+                    android:id="@+id/edit_text_id_medicamento"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textStyle="normal|bold|italic"
+
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                        android:textAppearance="?android:textAppearanceLarge"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textStyle="normal|bold|italic"
+                        android:text="NAME"
+                        android:paddingLeft="5dp"
+                        android:gravity="center"
+                        />
+
+                    <EditText
+                        android:id="@+id/edit_text_nombre_medicamento"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimary"
+                        android:textAppearance="?android:textAppearanceLarge"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textStyle="normal|bold|italic"
+
+                        android:gravity="center"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textStyle="normal|bold|italic"
+                    android:text="AMOUNT"
+                    android:paddingLeft="5dp"
+                    android:gravity="center"
+                    />
+
+                        <EditText
+                            android:id="@+id/edit_text_cantidad_disponible"
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorPrimary"
+                            android:textAppearance="?android:textAppearanceLarge"
+                            android:fontFamily="sans-serif-condensed"
+                            android:textStyle="normal|bold|italic"
+
+                            android:gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textStyle="normal|bold|italic"
+                    android:text="LAB"
+
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+                    />
+
+                <Spinner
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinner" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
 
             <Button
-                android:id="@+id/main_btn_borra"
+                android:id="@+id/button_insertar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Borrar"
-                android:onClick="onClick" />
+                android:text="Insert"
+                android:onClick="onClickInsert"
+                android:textColor="@android:color/white"/>
 
             <Button
-                android:id="@+id/main_btn_anade"
+                android:id="@+id/button_modificar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Añadir"
-                android:onClick="onClick" />
+                android:text="Modify"
+                android:onClick="onClickModify"
+                android:textColor="@android:color/white"/>
 
             <Button
-                android:id="@+id/main_btn_reseta"
+                android:id="@+id/button_borrar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Modificar"
-                android:onClick="onClick" />
+                android:text="Erase"
+                android:onClick="onClickErase"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/button_limpiar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Clean"
+                android:onClick="onClickClean"
+                android:textColor="@android:color/white"/>
+
+
         </LinearLayout>
 
     </LinearLayout>
 
     <ListView
-        android:id="@+id/main_lv_contacts"
+        android:id="@+id/list_View_Medicamentos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/mainActivity_LLAction"
-        android:layout_alignParentTop="true" >
+        android:layout_alignParentTop="true"
+        android:choiceMode="singleChoice"
+        android:listSelector="@color/sunshine_light_blue">
     </ListView>
 
 </RelativeLayout>

@@ -19,7 +19,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     @InjectView(R.id.button_borrar)
 	protected Button buttonBorra;
