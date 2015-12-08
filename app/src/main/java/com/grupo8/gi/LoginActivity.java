@@ -229,7 +229,7 @@ public class LoginActivity extends AppCompatActivity {
             if (success) {
                 finish();
                 Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-                myIntent.putExtra(NAME_INTENT_ROL, user.getRol().getRolDes());
+                myIntent.putExtra(NAME_INTENT_ROL, user.getRol().getRolName());
                 myIntent.putExtra(NAME_INTENT_ACCESS, acceso);
                 myIntent.putExtra(NAME_INTENT_MODIFY, modificacion);
                 startActivity(myIntent);
