@@ -30,8 +30,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final String NAME_INTENT_MODIFY = "modificacion";
     public static final String NAME_INTENT_ACCESS = "acceso";
-    public static final String NAME_INTENT_MEDICAMENTOS = "medicamentos";
-    public static final String NAME_INTENT_LABORATORIOS = "laboratorios";
     public static final String NAME_INTENT_ROL = "rol";
 
 
