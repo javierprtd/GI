@@ -7,6 +7,9 @@ import java.util.*;
 
 public class Rol 
 {
+
+    public enum ROLES {ADMINISTRADOR,USUARIO,INVITADO};
+
     private static String BD_SERVER = "192.168.1.16";
     private static String BD_NAME = "GI";
     
@@ -14,6 +17,7 @@ public class Rol
     private String rolDes;
     private boolean admin;
     private List<Permiso> permisos;
+
 
     public static List<Rol> ListaRoles()
 	{
@@ -69,8 +73,8 @@ public class Rol
 		// Actualiza el atributo en memoria y en la base de datos
         BD miBD = new BD(BD_SERVER, BD_NAME);
         miBD.Update("UPDATE tROL SET rolName = '" + value + "' WHERE rolName = '" + rolName + "'");
-    	miBD.finalize();
-    	rolName = value;
+        miBD.finalize();
+        rolName = value;
     }
 
     public String getRolDes() 
@@ -105,8 +109,11 @@ public class Rol
     	
 		// Actualiza el atributo admin de other en memoria y en la base de datos
     	for (Rol r : ListaRoles())
-			if(r.getRolName().equalsIgnoreCase(other.getRolName()))
-				other.setAdmin(value);
+			if(r.getRolName().equalsIgnoreCase(other.getRolName())){
+                //other.setAdmin(value);
+                other.admin = value;
+            }
+
 
         BD miBD = new BD(BD_SERVER, BD_NAME);
         miBD.Update("UPDATE tROL SET admin = '" + value + "' WHERE rolName = '" + other.getRolName() + "'");

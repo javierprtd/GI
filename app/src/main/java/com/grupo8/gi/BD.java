@@ -1,50 +1,62 @@
 package com.grupo8.gi;
 
-import android.content.Context;
+
 import android.os.StrictMode;
 import android.util.Log;
-import android.view.Gravity;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import net.sourceforge.jtds.jdbc.Driver;
-
 import java.sql.*;
 import java.util.*;
 
 public class BD 
 {
-	private Connection con;
+	private static final String SERVER = "192.168.1.131";
+    private static final String DATA_BASE_NAME = "GI";
+    private static final String USER_BD = "invitado";
+    private static final String USER_PASS = "invitado";
+
+	private Connection con = null;
 
 	public BD (String server, String databaseName) {
 		try {
-			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-			StrictMode.setThreadPolicy(policy);
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
 
-			Class.forName("net.sourceforge.jtds.jdbc.Driver");
-			String connUrl = "jdbc:jtds:sqlserver://" + server + "/" + databaseName;
-			con = DriverManager.getConnection(connUrl, "invitado", "invitado");
+            Class.forName("net.sourceforge.jtds.jdbc.Driver");
+            String connUrl = "jdbc:jtds:sqlserver://" + SERVER + "/" + DATA_BASE_NAME;
+            con = DriverManager.getConnection(connUrl, USER_BD, USER_PASS);
 		} catch (SQLException e) {
-			Log.e("Error1", e.getMessage());
+			throw new Error(e.getMessage());
 		} catch (ClassNotFoundException e) {
-			Log.e("Error2", e.getMessage());
+            throw new Error(e.getMessage());
 		}
 	}
 
-	public void finalize ()
-	{
+	public BD () {
+		try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            Class.forName("net.sourceforge.jtds.jdbc.Driver");
+            String connUrl = "jdbc:jtds:sqlserver://" + SERVER + "/" + DATA_BASE_NAME;
+            con = DriverManager.getConnection(connUrl, USER_BD, USER_PASS);
+		} catch (SQLException e) {
+			throw new Error(e.getMessage());
+		} catch (ClassNotFoundException e) {
+			throw new Error(e.getMessage());
+		}
+	}
+
+	public void finalize () {
 		try
 		{
 			if (con != null)  con.close();
 		}
 		catch (SQLException ex)
 		{
-			throw new Error("Error al Cerrar la Conexi�n");
+			throw new Error("Error al Cerrar la Conexión");
 		}
     }
 
-	public Object SelectEscalar(String sel)
-	{
+	public Object SelectEscalar(String sel) {
 		ResultSet rset;
 		Object res = null;
 		try
@@ -64,8 +76,7 @@ public class BD
 		return res;
 	}
 	
-	public List<Object[]> Select(String sel)
-	{
+	public List<Object[]> Select(String sel) {
 		ResultSet rset;
 		List<Object[]> lista = new ArrayList<Object[]>();
 		try
@@ -93,8 +104,7 @@ public class BD
 		return lista;
 	}
 	
-	public void Insert(String ins)
-	{
+	public void Insert(String ins) {
 		try
 		{
 			Statement stmt = con.createStatement();
@@ -107,8 +117,7 @@ public class BD
 		}
 	}
 
-	public void Delete(String del)
-	{
+	public void Delete(String del) {
 		try
 		{
 			Statement stmt = con.createStatement();
@@ -121,8 +130,7 @@ public class BD
 		}
 	}
 
-	public void Update(String up)
-	{
+	public void Update(String up) {
 		try
 		{
 			Statement stmt = con.createStatement();

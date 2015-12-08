@@ -3,7 +3,6 @@ package com.grupo8.gi;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -11,85 +10,119 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.os.Bundle;
+import android.widget.Spinner;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnClickListener {
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
-	private Button buttonBorra, buttonAnade, buttonModifica;
-	private EditText etNombre, etApellido, etTelefono, etEmail;
-	private ListView contactsListView;
+public class MainActivity extends AppCompatActivity{
+
+    @InjectView(R.id.button_borrar)
+	protected Button buttonBorra;
+    @InjectView(R.id.button_insertar)
+    protected Button buttonAñade;
+    @InjectView(R.id.button_modificar)
+    protected Button buttonModificar;
+    @InjectView(R.id.button_limpiar)
+    protected Button buttonLimpiar;
+
+    @InjectView( R.id.edit_text_id_medicamento)
+	protected EditText editTextidMedicamento;
+
+    @InjectView(R.id.edit_text_nombre_medicamento)
+    protected EditText editTextnombreMedicamento;
+
+    @InjectView(R.id.edit_text_cantidad_disponible)
+    protected EditText editTextCantidadDisponible;
+
+    @InjectView(R.id.spinner)
+    protected Spinner spinnerLaboratorio;
+
+    @InjectView(R.id.list_View_Medicamentos)
+    protected ListView listViewMedicamentos;
+
 	private boolean acceso, modificacion;
-	private List<Contacto> contactoList;
-	private Campo campo;
-	private Contacto contacto;
+	private List<Medicamento> medicamentosList;
+    List<Laboratorio> laboratoriosList;
+	private Medicamento medicamentoMostrado;
+    private int positionItemMostrado;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+        ButterKnife.inject(this);
 
 		Intent myIntent = getIntent();
-		acceso = myIntent.getBooleanExtra("acceso", false);
-		modificacion = myIntent.getBooleanExtra("modificacion", false);
-
-		if (acceso) {
-			contactsListView = (ListView) findViewById(R.id.main_lv_contacts);
-
-			if (modificacion) {
-				etNombre = (EditText) findViewById(R.id.main_et_nombre);
-				etApellido = (EditText) findViewById(R.id.main_et_apellido);
-				etEmail = (EditText) findViewById(R.id.main_et_email);
-				etTelefono = (EditText) findViewById(R.id.main_et_telefono);
-
-				buttonBorra = (Button) findViewById(R.id.main_btn_borra);
-				buttonAnade = (Button) findViewById(R.id.main_btn_anade);
-				buttonModifica = (Button) findViewById(R.id.main_btn_reseta);
-			}
-		}
+		acceso = myIntent.getBooleanExtra(LoginActivity.NAME_INTENT_ACCESS, false);
+		modificacion = myIntent.getBooleanExtra(LoginActivity.NAME_INTENT_MODIFY, false);
+        medicamentosList = DatosPrincipales.getInstance().getMedicamentosList();
+        laboratoriosList = DatosPrincipales.getInstance().getLaboratorioList();
+       /* medicamentosList = (ArrayList<Medicamento>) myIntent.getSerializableExtra(LoginActivity.NAME_INTENT_MEDICAMENTOS);
+        laboratoriosList = (ArrayList<Laboratorio>)myIntent.getSerializableExtra(LoginActivity.NAME_INTENT_LABORATORIOS);*/
 	}
+
+
+    private void initMedicamentosListView() {
+       // medicamentosList = Medicamento.ListaMedicamentos();
+        ArrayAdapter<Medicamento> arrayAdapter = new MedicamentosAdapter(getApplicationContext(),medicamentosList);
+        listViewMedicamentos.setAdapter(arrayAdapter);
+    }
+
+    private void initLaboratoriosSpinner(){
+       // List<Laboratorio> laboratoriosList = Laboratorio.ListaLaboratorios();
+        List<String> identificadores = new ArrayList<>();
+
+        for(Laboratorio laboratorio : laboratoriosList){
+            identificadores.add(laboratorio.getNOMBRE_LABORATORIO());
+        }
+
+        ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter(getApplicationContext(), R.layout.spinner_laboratorio, identificadores);
+        spinnerLaboratorio.setAdapter(arrayAdapter);
+    }
+
+    private void registerListenerMedicamentosListView(){
+        listViewMedicamentos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View container, int position, long id) {
+                positionItemMostrado = position;
+                medicamentoMostrado = medicamentosList.get(position);
+                editTextidMedicamento.setText(String.valueOf(medicamentoMostrado.getIdMedicamento()));
+                editTextnombreMedicamento.setText(medicamentoMostrado.getNombreMedicamento());
+                editTextCantidadDisponible.setText(String.valueOf(medicamentoMostrado.getCantidadDisponible()));
+                spinnerLaboratorio.setSelection(medicamentoMostrado.getLaboratorio());
+            }
+        });
+    }
+
+    private void habilitarBotones(boolean habilitar){
+        buttonAñade.setEnabled(habilitar);
+        buttonBorra.setEnabled(habilitar);
+        buttonModificar.setEnabled(habilitar);
+        buttonLimpiar.setEnabled(habilitar);
+    }
 
 	@Override
 	protected void onStart() {
 		super.onStart();
 
 		if (acceso) {
-			contactoList = Contacto.ListaContactos();
-            ArrayAdapter<Contacto> arrayAdapter = new ArrayAdapter<Contacto>(getApplicationContext(), R.layout.list_item, contactoList);
-            contactsListView.setAdapter(arrayAdapter);
-			Toast toast = Toast.makeText(this, "Lista de contactos cargada", Toast.LENGTH_LONG);
-			TextView vista = (TextView) toast.getView().findViewById(android.R.id.message);
-			if (vista != null) vista.setGravity(Gravity.CENTER);
-			toast.show();
+            initMedicamentosListView();
+            registerListenerMedicamentosListView();
+            initLaboratoriosSpinner();
 			if (modificacion) {
-				contactsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> parent, View container, int position, long id) {
-						contacto = contactoList.get(position);
-						etNombre.setText(contacto.getValor(campo.NOMBRE));
-						etApellido.setText(contacto.getValor(campo.APELLIDO));
-						etEmail.setText(contacto.getValor(campo.EMAIL));
-						etTelefono.setText(contacto.getValor(campo.TELEFONO));
-					}
-				});
+                habilitarBotones(true);
 			} else {
-				toast = Toast.makeText(this, "No tienes permiso para modificar", Toast.LENGTH_LONG);
-				vista = (TextView) toast.getView().findViewById(android.R.id.message);
-				if (vista != null) vista.setGravity(Gravity.CENTER);
-				toast.show();
+                habilitarBotones(false);
 			}
         } else {
-			Toast toast = Toast.makeText(this, "No tienes acceso a la lista", Toast.LENGTH_LONG);
-			TextView vista = (TextView) toast.getView().findViewById(android.R.id.message);
-			if (vista != null) vista.setGravity(Gravity.CENTER);
-			toast.show();
-		}
 
+
+		}
 	}
 
 	@Override
@@ -97,81 +130,69 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 		super.onStop();
 	}
 
-	@Override
-	public void onClick(View v) {
-		if (v.equals(buttonBorra)) {
-			try {
-				contacto = new Contacto(etTelefono.getText().toString());
+    public void onClickErase(View v){
+        medicamentoMostrado.borrarMedicamento();
+        ArrayAdapter<Medicamento> arrayAdapter = (ArrayAdapter<Medicamento>) listViewMedicamentos.getAdapter();
+        arrayAdapter.remove(medicamentoMostrado);
+        arrayAdapter.notifyDataSetInvalidated();
+    }
 
-				for (Contacto c : contactoList) {
-					if (c.compareTo(contacto) == 0) {
-						contacto.borraContacto();
-						contactoList.remove(c);
-						ArrayAdapter<Contacto> arrayAdapter = new ArrayAdapter<Contacto>(this, R.layout.list_item, contactoList);
-						contactsListView.setAdapter(arrayAdapter);
-						etNombre.setText("");
-						etApellido.setText("");
-						etTelefono.setText("");
-						etEmail.setText("");
-						Toast toast = Toast.makeText(this, "Contacto borrado", Toast.LENGTH_LONG);
-						TextView vista = (TextView) toast.getView().findViewById(android.R.id.message);
-						if (vista != null) vista.setGravity(Gravity.CENTER);
-						toast.show();
-						break;
-					}
-				}
-			} catch (Exception e) {
-				Toast toast = Toast.makeText(this, "No existe tal contacto", Toast.LENGTH_LONG);
-				TextView vista = (TextView) toast.getView().findViewById(android.R.id.message);
-				if (vista != null) vista.setGravity(Gravity.CENTER);
-				toast.show();
-			}
-		} else if (v.equals(buttonAnade)) {
-			contacto = new Contacto(etNombre.getText().toString(), etApellido.getText().toString(), etEmail.getText().toString(), etTelefono.getText().toString());
-			contactoList = Contacto.ListaContactos();
-			ArrayAdapter<Contacto> arrayAdapter = new ArrayAdapter<Contacto>(this, R.layout.list_item, contactoList);
-			contactsListView.setAdapter(arrayAdapter);
+    public void onClickInsert(View v){
+        int idMedicamento = Integer.parseInt(String.valueOf(editTextidMedicamento.getText().toString()));
+        String nombreMedicamento = editTextnombreMedicamento.getText().toString();
+        int cantidadDisponible = Integer.parseInt(editTextCantidadDisponible.getText().toString());
+        int laboratorio = spinnerLaboratorio.getSelectedItemPosition();
 
-			etNombre.setText("");
-			etApellido.setText("");
-			etTelefono.setText("");
-			etEmail.setText("");
-		} else if (v.equals(buttonModifica)) {
-			try {
-				contacto = new Contacto(etTelefono.getText().toString());
+        Medicamento medicamento = new Medicamento(idMedicamento,nombreMedicamento,cantidadDisponible,laboratorio);
 
-				for (Contacto c : contactoList) {
-					if (c.compareTo(contacto) == 0) {
-						contactoList.remove(c);
-						break;
-					}
-				}
+        ArrayAdapter<Medicamento> arrayAdapter = (ArrayAdapter<Medicamento>) listViewMedicamentos.getAdapter();
+        arrayAdapter.insert(medicamento,0);
+        arrayAdapter.notifyDataSetInvalidated();
+        //TODO GENERAR CATCH PARA ID REPETIDOS O LAB NO EXISTENTES
+    }
 
-				contacto.setValor(campo.NOMBRE, etNombre.getText().toString());
-				contacto.setValor(campo.APELLIDO, etApellido.getText().toString());
-				contacto.setValor(campo.EMAIL, etEmail.getText().toString());
-				contacto.setValor(campo.TELEFONO, etTelefono.getText().toString());
+    public void onClickModify(View v){
+        int idMedicamento = Integer.parseInt(String.valueOf(editTextidMedicamento.getText().toString()));
+        String nombreMedicamento = editTextnombreMedicamento.getText().toString();
+        int cantidadDisponible = Integer.parseInt(editTextCantidadDisponible.getText().toString());
+        int laboratorio = spinnerLaboratorio.getSelectedItemPosition();
 
-				etNombre.setText("");
-				etApellido.setText("");
-				etTelefono.setText("");
-				etEmail.setText("");
+        boolean modificado = false;
 
-				contactoList = Contacto.ListaContactos();
-				ArrayAdapter<Contacto> arrayAdapter = new ArrayAdapter<Contacto>(this, R.layout.list_item, contactoList);
-				contactsListView.setAdapter(arrayAdapter);
+        if(idMedicamento != medicamentoMostrado.getIdMedicamento()){
+            medicamentoMostrado.setIdMedicamento(idMedicamento);
+            modificado = true;
+        }
 
-				Toast toast = Toast.makeText(this, "Contacto modificado", Toast.LENGTH_LONG);
-				TextView vista = (TextView) toast.getView().findViewById(android.R.id.message);
-				if (vista != null) vista.setGravity(Gravity.CENTER);
-				toast.show();
+        if(!nombreMedicamento.equals(medicamentoMostrado.getNombreMedicamento())){
+            medicamentoMostrado.setNombreMedicamento(nombreMedicamento);
+            modificado = true;
+        }
 
-			} catch (Exception e) {
-				Toast toast = Toast.makeText(this, "No existe tal contacto", Toast.LENGTH_LONG);
-				TextView vista = (TextView) toast.getView().findViewById(android.R.id.message);
-				if (vista != null) vista.setGravity(Gravity.CENTER);
-				toast.show();
-			}
-		}
-	}
+        if(cantidadDisponible != medicamentoMostrado.getCantidadDisponible()){
+            medicamentoMostrado.setCantidadDisponible(cantidadDisponible);
+            modificado = true;
+        }
+
+        if(laboratorio != medicamentoMostrado.getLaboratorio()){
+            medicamentoMostrado.setLaboratorio(laboratorio);
+            modificado = true;
+        }
+
+        if(modificado){
+            ArrayAdapter<Medicamento> arrayAdapter = (ArrayAdapter<Medicamento>) listViewMedicamentos.getAdapter();
+            arrayAdapter.notifyDataSetInvalidated();
+        }
+    }
+
+    public void onClickClean(View v){
+        editTextCantidadDisponible.setText("");
+        editTextidMedicamento.setText("");
+        //spinnerLaboratorio.setText(""); //TODO LAB va por spinner
+        editTextnombreMedicamento.setText("");
+
+        listViewMedicamentos.setSelection(0);
+
+
+    }
 }

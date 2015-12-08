@@ -4,6 +4,8 @@ import java.util.*;
 
 public class Pantalla 
 {
+	public enum PANTALLAS {MEDICAMENTOS};
+
     private static String BD_SERVER = "192.168.1.16";
     private static String BD_NAME = "GI";
 

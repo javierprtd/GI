@@ -72,7 +72,7 @@ public class Contacto implements Comparable<Contacto>
 	public void setValor(Campo campo, String valor)
 	{
 		if (valor == null)
-			throw new Error("ERROR: Argumento no v�lido");
+			throw new Error("ERROR: Argumento no valido");
 
 		BD miBD = new BD(BD_SERVER, BD_NAME);
 		String up = "UPDATE Contacto SET ";
