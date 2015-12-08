@@ -143,13 +143,11 @@ public class MainActivity extends AppCompatActivity {
 
         Medicamento medicamento = new Medicamento(idMedicamento,nombreMedicamento,cantidadDisponible,laboratorio);
 
-        listViewMedicamentos.clearChoices();
         ArrayAdapter<Medicamento> arrayAdapter = (ArrayAdapter<Medicamento>) listViewMedicamentos.getAdapter();
         arrayAdapter.insert(medicamento, 0);
         arrayAdapter.notifyDataSetInvalidated();
 
         onClickClean(v);
-
         //TODO GENERAR CATCH PARA ID REPETIDOS O LAB NO EXISTENTES
     }
 
@@ -194,6 +192,8 @@ public class MainActivity extends AppCompatActivity {
         //spinnerLaboratorio.setText(""); //TODO LAB va por spinner
         editTextnombreMedicamento.setText("");
 
-        listViewMedicamentos.setSelection(0);
+        listViewMedicamentos.clearChoices();
+        ArrayAdapter<Medicamento> arrayAdapter = (ArrayAdapter<Medicamento>) listViewMedicamentos.getAdapter();
+        arrayAdapter.notifyDataSetInvalidated();
     }
 }
